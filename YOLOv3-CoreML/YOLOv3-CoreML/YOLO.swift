@@ -30,6 +30,13 @@ class YOLO {
   }
 
   public func computeBoundingBoxes(features: [MLMultiArray]) -> [Prediction] {
+    /*
+     * [
+     *  1x1x255x13x13,
+     *  1x1x255x26x26,
+     *  1x1x255x52x52
+     * ]
+     */
     assert(features[0].count == 255*13*13)
     assert(features[1].count == 255*26*26)
     assert(features[2].count == 255*52*52)
@@ -56,19 +63,22 @@ class YOLO {
     var gridWidth = [13, 26, 52]
     
     var featurePointer = UnsafeMutablePointer<Double>(OpaquePointer(features[0].dataPointer))
-    var channelStride = features[0].strides[0].intValue
-    var yStride = features[0].strides[1].intValue
-    var xStride = features[0].strides[2].intValue
-
+    
+    // features[i].shape ---> [1, 1, class_channel, gridHeight, gridWidth]
+    var channelStride = features[0].shape[2].intValue
+    var yStride = features[0].shape[3].intValue
+    var xStride = features[0].shape[4].intValue
+    
     func offset(_ channel: Int, _ x: Int, _ y: Int) -> Int {
-      return channel*channelStride + y*yStride + x*xStride
+        // 3 dimensional array ---> 1 dimensional array
+        return channel * xStride * yStride + y * xStride + x
     }
-
+    
     for i in 0..<3 {
         featurePointer = UnsafeMutablePointer<Double>(OpaquePointer(features[i].dataPointer))
-        channelStride = features[i].strides[0].intValue
-        yStride = features[i].strides[1].intValue
-        xStride = features[i].strides[2].intValue
+        channelStride = features[i].shape[2].intValue
+        yStride = features[i].shape[3].intValue
+        xStride = features[i].shape[4].intValue
         for cy in 0..<gridHeight[i] {
             for cx in 0..<gridWidth[i] {
                 for b in 0..<boxesPerCell {

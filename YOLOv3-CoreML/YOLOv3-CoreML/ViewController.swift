@@ -52,6 +52,7 @@ class ViewController: UIViewController {
 
     // Make colors for the bounding boxes. There is one color for each class,
     // 80 classes in total.
+    /*
     for r: CGFloat in [0.2, 0.4, 0.6, 0.8, 1.0] {
       for g: CGFloat in [0.3, 0.7, 0.6, 0.8] {
         for b: CGFloat in [0.4, 0.8, 0.6, 1.0] {
@@ -60,6 +61,15 @@ class ViewController: UIViewController {
         }
       }
     }
+     */
+    colors.append(UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1))   // unknown
+    colors.append(UIColor(red: 0.1, green: 0.9, blue: 0.5, alpha: 1))   // ped-blue
+    colors.append(UIColor(red: 0.9, green: 0.1, blue: 0.1, alpha: 1))   // ped-red
+    colors.append(UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1))   // ped-unknown
+    colors.append(UIColor(red: 0.2, green: 0.8, blue: 0.5, alpha: 1))   // car-blue
+    colors.append(UIColor(red: 0.8, green: 0.1, blue: 0.1, alpha: 1))   // car-red
+    colors.append(UIColor(red: 0.9, green: 0.9, blue: 0.1, alpha: 1))   // car-yellow
+    colors.append(UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1))   // car-unknown
   }
 
   func setUpCoreImage() {
@@ -88,7 +98,7 @@ class ViewController: UIViewController {
   func setUpCamera() {
     videoCapture = VideoCapture()
     videoCapture.delegate = self
-    videoCapture.fps = 50
+    videoCapture.fps = 10
     videoCapture.setUp(sessionPreset: AVCaptureSession.Preset.vga640x480) { success in
       if success {
         // Add the video preview into the UI.

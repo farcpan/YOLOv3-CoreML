@@ -3,7 +3,15 @@ import UIKit
 import CoreML
 import Accelerate
 
+// The labels for the 8 classes.
+let labels = [
+    "不明",
+    "歩行者用（青）", "歩行者用（赤）", "歩行者用（不明）",
+    "車両用（青）", "車両用（赤）", "車両用（黄）", "車両用（不明）"
+]
+
 // The labels for the 80 classes.
+/*
 let labels = [
     "person", "bicycle", "car", "motorbike", "aeroplane", "bus", "train", "truck", "boat", "traffic light",
     "fire hydrant", "stop sign", "parking meter", "bench", "bird", "cat", "dog", "horse", "sheep", "cow",
@@ -14,6 +22,7 @@ let labels = [
     "diningtable", "toilet", "tvmonitor", "laptop", "mouse", "remote", "keyboard", "cell phone", "microwave", "oven",
     "toaster", "sink", "refrigerator", "book", "clock", "vase", "scissors", "teddy bear", "hair drier", "toothbrush"
 ]
+ */
 
 let anchors: [[Float]] = [[116,90,  156,198,  373,326], [30,61,  62,45,  59,119], [10,13,  16,30,  33,23]]
 
